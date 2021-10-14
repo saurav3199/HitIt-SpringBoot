@@ -112,4 +112,13 @@ public class HitService {
 		Optional<Record> returnRecord = recordRepository.findById(id);
 		return returnRecord.orElse(null);
 	}
+
+	public Boolean deleteRecord(String id) {
+		Optional<Record> returnRecord = recordRepository.findById(id);
+		if (returnRecord.isPresent()) {
+			recordRepository.deleteById(id);
+			return true;
+		}
+		return false;
+	}
 }
