@@ -104,6 +104,15 @@ public class HitService {
 
 	}
 
+	public List<Record> getAllRecords() {
+		return recordRepository.findAll();
+	}
+
+	public Record getRecordById(String id) {
+		Optional<Record> record = recordRepository.findById(id);
+		return record.orElse(null);
+	}
+
 	public Record addRecord(Record record) {
 		return recordRepository.save(record);
 	}
