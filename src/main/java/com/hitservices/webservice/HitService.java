@@ -11,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -105,5 +106,10 @@ public class HitService {
 
 	public Record addRecord(Record record) {
 		return recordRepository.save(record);
+	}
+
+	public Record editRecord(Record record, String id) {
+		Optional<Record> returnRecord = recordRepository.findById(id);
+		return returnRecord.orElse(null);
 	}
 }

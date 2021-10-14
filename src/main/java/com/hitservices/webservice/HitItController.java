@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -43,5 +39,17 @@ public class HitItController {
 				.status(HttpStatus.CREATED)
 				.body(hitService.addRecord(record));
 	}
-	
+
+	@PutMapping(path = "/edit/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> editRecord(@RequestBody Record record, @PathVariable(value = "id") String id) {
+		Record returnRecord = hitService.editRecord(record, id);
+		if (returnRecord != null) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(returnRecord);
+		}
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("No Record with this ID");
+	}
 }
