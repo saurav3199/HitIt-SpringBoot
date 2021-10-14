@@ -1,5 +1,10 @@
 package com.hitservices.webservice;
 
+import com.hitservices.webservice.entity.Record;
+import com.hitservices.webservice.repository.RecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -8,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@Service
 public class HitService {
 
 	private String url;
 	private Boolean isParallel;
 	private Integer count;
 
+	@Autowired
+	private RecordRepository recordRepository;
 	public HitService() {
 
 	}
@@ -93,5 +101,9 @@ public class HitService {
 		long timeTaken = System.currentTimeMillis() - startTime;
 		return timeTaken;
 
+	}
+
+	public Record addRecord(Record record) {
+		return recordRepository.save(record);
 	}
 }
