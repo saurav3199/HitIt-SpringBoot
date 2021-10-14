@@ -52,4 +52,17 @@ public class HitItController {
 				.status(HttpStatus.BAD_REQUEST)
 				.body("No Record with this ID");
 	}
+
+	@DeleteMapping(path = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteRecord(@PathVariable(value = "id")String id) {
+		Boolean isRecordDeleted = hitService.deleteRecord(id);
+		if (isRecordDeleted) {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.body("Record deleted successfully");
+		}
+		return ResponseEntity
+				.status(HttpStatus.NOT_FOUND)
+				.body("Record not found with the specified id");
+	}
 }
